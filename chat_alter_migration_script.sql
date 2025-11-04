@@ -1,0 +1,15 @@
+use boxup;
+ALTER TABLE chat
+ADD COLUMN receptor_id INT NOT NULL AFTER sender_id;
+
+ALTER TABLE chat
+CHANGE COLUMN id id INT PRIMARY KEY AUTO_INCREMENT,
+CHANGE COLUMN mudanca_id mudanca_id INT NOT NULL,
+CHANGE COLUMN sender_id remetente_id INT NOT NULL,
+CHANGE COLUMN message mensagem TEXT NOT NULL,
+CHANGE COLUMN created_at criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+ALTER TABLE chat
+ADD CONSTRAINT fk_mudanca FOREIGN KEY (mudanca_id) REFERENCES mudanca(id) ON DELETE CASCADE,
+ADD CONSTRAINT fk_remetente FOREIGN KEY (remetente_id) REFERENCES usuario(id) ON DELETE CASCADE,
+ADD CONSTRAINT fk_receptor FOREIGN KEY (receptor_id) REFERENCES usuario(id) ON DELETE CASCADE;
